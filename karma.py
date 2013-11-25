@@ -27,6 +27,7 @@ class Group(Resource):
 
 class AllGroups(Resource):
     def __init__(self,db):
+        Resource.__init__(self)
         self.db = db
 
     def getChild(self, childname, request):
