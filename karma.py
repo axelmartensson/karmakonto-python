@@ -6,13 +6,15 @@ from twisted.internet import reactor
 from calendar import calendar
 
 class Individual(Resource):
-    def __init__(self,db, year):
+    def __init__(self,db, year, group):
         Resource.__init__(self)
         self.db = db
         self.year = year
+        self.group = group
 
     def render_GET(self, request):
-        return "<html><body><pre>Karma-item: %s</pre></body></html>" % self.year
+        return "<html><body><pre>Karma-item: %s \n\
+        karma-group:%s</pre></body></html>" % (self.year, self.group)
 
 class Group(Resource):
     def __init__(self,db, name):
@@ -20,7 +22,7 @@ class Group(Resource):
         self.db = db
         self.name = name
     def getChild(self, childname, request):
-        return Individual(self.db,childname)
+        return Individual(self.db,childname, self.name)
 
     def render_GET(self, request):
         return "<html><body><pre>karma-group: %s</pre></body></html>" % self.name 
