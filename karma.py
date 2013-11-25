@@ -20,7 +20,7 @@ class Group(Resource):
         self.db = db
         self.name = name
     def getChild(self, childname, request):
-        return Individual(childname)
+        return Individual(self.db,childname)
 
     def render_GET(self, request):
         return "<html><body><pre>karma-group: %s</pre></body></html>" % self.name 
@@ -33,7 +33,7 @@ class AllGroups(Resource):
     def getChild(self, childname, request):
         if childname == "": #le hack for getting the root resource
             return self;
-        return Group(childname);
+        return Group(self.db, childname);
 
     def render_GET(self, request):
         return "<html><body><pre>list of all karma-groups</pre></body></html>"  
